@@ -1,0 +1,41 @@
+<html>
+<head>
+  <title>JS Function Additionals</title>
+</head>
+<body>
+  <script type="text/javascript" src="ext/ext-base-debug.js"></script>
+  <script type="text/javascript" src="ext/ext-all-debug.js"></script>
+
+  <script type="text/javascript" src="scripts/Function.Invoke.js"></script>
+  
+  <script>
+var globalTemp = '';
+function content(iterations){
+	var i=0,
+		toReturn = 'Dummy functions with ' + iterations + ' iterations cycle',
+		trim = Ext.util.Format.trim;
+	for (;i<iterations;i+=1){
+		Ext.util.Format.trim('       Iteration ' + (i+1) + '<br />		');
+	}
+	return toReturn;
+}
+
+content.createDelegate({
+	trim: Ext.util.Format.trim
+}, [50]).profile(function(profileData){
+	var i=0, len = profileData.length, average = 0;
+	
+	if (profileData.constructor === Array){
+		for (;i<len;i+=1){
+			average += profileData[i].runTime / len;
+		}
+	}else{
+		average = profileData.runTime;
+	}
+	
+	alert(average);
+}, 1);
+  </script>
+
+</body>
+</html>
